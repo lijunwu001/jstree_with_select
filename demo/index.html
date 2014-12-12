@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NgJsTree Demo Page</title>
+
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/jstree/dist/themes/default/style.min.css">
+        <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css">
+        <link rel="stylesheet" href="bower_components/angular-busy/dist/angular-busy.css">
+        <style>
+            body {
+                padding-top: 50px;
+            }
+        </style>
+    </head>
+    <body ng-app="ngJsTreeDemo">
+        <div class="container" ng-controller="treeCtrl as vm">
+            <div class="col-xs-12 text-center">
+                <h2>JsTree</h2>
+            </div>
+            <br />
+            <br />
+            <div class="row" cg-busy="vm.promise">
+                <toaster-container></toaster-container>
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="glyphicon glyphicon-tree-conifer"></i>JSTree</div>
+                        <div class="panel-body">
+<!--                            <div js-tree="vm.treeConfig" should-apply="vm.applyModelChanges()" ng-model="vm.treeData" tree="vm.treeInstance" tree-events="ready:vm.readyCB;create_node:vm.createCB"></div>  -->
+                            <div js-tree="vm.treeConfig" ng-model="vm.treeData" tree="vm.treeInstance" tree-events="changed:vm.changeNode;select_node:vm.selectNode"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                        <select ng-model='vm.selected' required>
+                            <option ng-repeat="node in vm.treeData" ng-click="vm.select_cb(node)" value='{{ node }}'>{{ node.text }}</option>
+                        </select>                     
+                <div>
+            <div class="row" style="margin-top:30px">
+                <div class="col-xs-12">
+                <form action="">
+                <label>Selected: </label><br />
+                <div ng-repeat='node in vm.selected'>
+                  ID: <input type='text' ng-attr-value='{{ node["id"] }}' />
+                  Description: <input type='text'  ng-attr-value='{{ node["text"] }}' size='35'/><br />
+                </div>
+                <div>
+                  Selected:
+                  <div ng-bind='vm.selected'>
+                  </div>
+                </div>
+                  <input type='submit' value='submit'>
+                </form>
+<!--                    <b>Raw data:</b> {{ vm.treeData | json }}     -->
+                </div>
+            </div>
+        </div>
+      </div>  
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
+        <script src="bower_components/jstree/dist/jstree.js"></script>
+        <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="../dist/ngJsTree.js"></script>
+        <script src="app.js"></script>
+        <script src="treeCtrl.js"></script>
+    </body>
+</html>
